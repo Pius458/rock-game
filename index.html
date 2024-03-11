@@ -1,1 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--meta name="viewport" content="width=, initial-scale=1.0" -->
+    <title>Rock Paper Scissors Game</title>
+    <script src="script.js" defer></script>
+</head>
+<body>
+   <h1>Rock Paper Scissors Game</h1>
+
+   <button onclick="playGame('Rock')">Rock</button>
+   <button onclick="playGame('Paper')">Paper</button>
+   <button onclick="playGame('Scissors')">Scissors</button>
+   <div id="result"></div>
+
+   <script>
+    let playerwin = 0;
+    let compWin = 0;
+    let draw = 0;
+    let roundsPlayed = 0;
+    function playGame(playerChoice){
+        const choices = ['Rock', 'Paper', 'Scissors'];
+        const computersChoice = choices[Math.floor(Math.random() * choices.length)];
+
+        let result = "";
+
+        if(playerChoice === computersChoice){
+            result = "It's a draw";
+            draw++;
+        } else if(
+            (playerChoice === 'Rock' && computersChoice === 'Scissors') ||
+            (playerChoice === 'Paper' && computersChoice === 'Rock') ||
+            (playerChoice === 'Scissors' && computersChoice === 'Paper')
+        ){
+            result = 'You win';
+            playerwin++;
+        } else {
+            result = 'Computer beats you';
+            compWin++;
+        }
+        roundsPlayed++;
+
+        document.getElementById('result').innerHTML += `
+            <p>Your choice : ${playerChoice}</p>
+            <p>Computer's choice: ${computersChoice}</p>
+            <p>Result: ${result}</p>
+        `;
+        if(roundsPlayed === 5){
+            showFinalResults();
+
+        }
+    }
+    function showFinalResults(){
+        let winner = '';
+
+        if(playerwin > compWin){
+            winner = 'You win';
+        }else if(playerwin < compWin){
+            winner = 'Computer wins';
+        }else{
+            winner= 'it\'s a tie';
+        }
+
+        document.getElementById('result').innerHTML +=`
+        <h2>Final results</h2>
+        <p>Player Wins: ${playerwin}</p>
+        <p>Computer Wins: ${compWin}</p>
+        <p>Draws: ${draw}</p>
+        <h3>${winner} the game!</h3>
+        `;
+    }
+   </script>
+</body>
+</html>
 
